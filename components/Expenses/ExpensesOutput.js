@@ -47,11 +47,12 @@ const ExpenseOutput = ({ expenses, periodName }) => {
 
 export default ExpenseOutput;
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding:  24,
-    backgroundColor: GlobalStyles.colors.primary700
-  }
-})
+    paddingHorizontal: 24,
+    paddingTop: 24,
+    paddingBottom: 0,
+    backgroundColor: GlobalStyles.colors.primary700,
+  },
+});
