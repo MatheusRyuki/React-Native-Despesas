@@ -1,11 +1,11 @@
-import { View } from "react-native";
+import { Viewgi } from "react-native";
 import ExpenseSummary from "./ExpenseSummary";
 import ExpenseList from "./ExpenseList";
 
-const ExpenseOutput = ({ expenses }) => {
+const ExpenseOutput = ({ expenses, periodName }) => {
   return (
     <View>
-      <ExpenseSummary />
+      <ExpenseSummary periodName={periodName} expenses={expenses} />
       <ExpenseList />
     </View>
   );
