@@ -6,7 +6,7 @@ import { GlobalStyles } from "../../constants/styles";
 const ExpenseOutput = ({ expenses, periodName }) => {
   return (
     <View style={styles.container}>
-      <ExpenseSummary periodName={periodName} expenses={DUMMY_EXPENSES} />
+      <ExpenseSummary periodName={periodName} expenses={expenses} />
       <ExpenseList expenses={expenses} />
     </View>
   );
