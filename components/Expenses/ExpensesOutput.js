@@ -3,12 +3,11 @@ import ExpenseSummary from "./ExpenseSummary";
 import ExpenseList from "./ExpenseList";
 import { GlobalStyles } from "../../constants/styles";
 
-
 const ExpenseOutput = ({ expenses, periodName }) => {
   return (
     <View style={styles.container}>
       <ExpenseSummary periodName={periodName} expenses={DUMMY_EXPENSES} />
-      <ExpenseList expenses={DUMMY_EXPENSES} />
+      <ExpenseList expenses={expenses} />
     </View>
   );
 };
