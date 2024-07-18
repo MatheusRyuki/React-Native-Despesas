@@ -14,7 +14,11 @@ const RecentExpenses = () => {
   });
 
   return (
-    <ExpenseOutput periodName="Últimos 7 dias" expenses={recentExpenses} />
+    <ExpenseOutput
+      periodName="Últimos 7 dias"
+      expenses={recentExpenses}
+      fallbackText="Nenhum gasto registrado nos últimos 7 dias"
+    />
   );
 };
 
