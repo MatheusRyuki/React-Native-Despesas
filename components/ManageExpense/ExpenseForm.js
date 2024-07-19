@@ -1,8 +1,9 @@
-import { Alert, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import Input from "./Input";
 import Button from "../UI/Button";
 import { useState } from "react";
 import { GlobalStyles } from "../../constants/styles";
+import { getFormattedDate } from "../../util/date";
 
 const ExpenseForm = ({
   onCancel,
@@ -16,7 +17,7 @@ const ExpenseForm = ({
       isValid: true,
     },
     date: {
-      value: defaultValues ? getFormatted(defaultValues.date) : "",
+      value: defaultValues ? getFormattedDate(defaultValues.date) : "",
       isValid: true,
     },
     description: {
@@ -35,13 +36,16 @@ const ExpenseForm = ({
   };
 
   const submitHandler = () => {
+    const [day, month, year] = inputValues.date.value.split("/");
+    const date = new Date(`${year}-${month}-${day}`);
+
     const expenseData = {
       amount: +inputValues.amount.value,
-      date: new Date(inputValues.date.value),
+      date: new Date(date),
       description: inputValues.description.value,
     };
 
-    const amountIsValid = !isNan(expenseData.amount) && expenseData.amount > 0;
+    const amountIsValid = !isNaN(expenseData.amount) && expenseData.amount > 0;
     const dateIsValid = expenseData.date.toString() !== "Invalid Date";
     const descriptionIsValid = expenseData.description.trim().length > 0;
 
@@ -158,5 +162,4 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: GlobalStyles.colors.error500,
   },
-
 });
