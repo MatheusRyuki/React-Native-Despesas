@@ -1,13 +1,18 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
 import Input from "./Input";
 import Button from "../UI/Button";
 import { useState } from "react";
 
-const ExpenseForm = ({ onCancel, submitButtonLabel, onSubmit }) => {
+const ExpenseForm = ({
+  onCancel,
+  submitButtonLabel,
+  onSubmit,
+  defaultValues,
+}) => {
   const [inputValues, setInputValues] = useState({
-    amount: "",
-    date: "",
-    description: "",
+    amount: defaultValues ? defaultValues.amount.toString() : "",
+    date: defaultValues ? getFormatted(defaultValues.date) : "",
+    description: defaultValues ? defaultValues.description.toString() : "",
   });
 
   const inputChangeHandler = (inputIdentifier, enteredValue) => {
@@ -25,6 +30,17 @@ const ExpenseForm = ({ onCancel, submitButtonLabel, onSubmit }) => {
       date: new Date(inputValues.date),
       description: inputValues.description,
     };
+
+    const amountIsValid = !isNan(expenseData.amount) && expenseData.amount > 0;
+    const dateIsValid = expenseData.date.toString() !== "Invalid Date";
+    const description = expenseData.description.trim().length > 0;
+
+    if (!amountIsValid || !dateIsValid || !description) {
+      return Alert.alert(
+        "dado inválido",
+        "por favor, cheque os dados que colocou"
+      );
+    }
 
     onSubmit(expenseData);
   };
@@ -65,7 +81,7 @@ const ExpenseForm = ({ onCancel, submitButtonLabel, onSubmit }) => {
         <Button style={styles.button} mode="flat" onPress={onCancel}>
           Cancelar
         </Button>
-        <Button onPress={confirmHandler} style={styles.button}>
+        <Button onPress={submitHandler} style={styles.button}>
           {submitButtonLabel}
         </Button>
       </View>
