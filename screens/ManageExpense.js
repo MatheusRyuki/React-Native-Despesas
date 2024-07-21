@@ -4,6 +4,7 @@ import { GlobalStyles } from "../constants/styles";
 import { StyleSheet, View } from "react-native";
 import { ExpensesContext } from "../store/expense-context";
 import ExpenseForm from "../components/ManageExpense/ExpenseForm";
+import { storeExpense } from "../util/http";
 
 const ManageExpense = ({ route, navigation }) => {
   const expenseCtx = useContext(ExpensesContext);
@@ -34,6 +35,7 @@ const ManageExpense = ({ route, navigation }) => {
     if (isEditing) {
       expenseCtx.updatedExpense(editedExpenseId, expenseData);
     } else {
+      storeExpense(expenseData);
       expenseCtx.addExpense(expenseData);
     }
 
