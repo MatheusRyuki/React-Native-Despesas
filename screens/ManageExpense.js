@@ -5,8 +5,10 @@ import { StyleSheet, View } from "react-native";
 import { ExpensesContext } from "../store/expense-context";
 import ExpenseForm from "../components/ManageExpense/ExpenseForm";
 import { deleteExpense, storeExpense, updateExpense } from "../util/http";
+import LoadingOverlay from "../components/UI/LoadingOverlay";
 
 const ManageExpense = ({ route, navigation }) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const expenseCtx = useContext(ExpensesContext);
 
   const editedExpenseId = route.params?.expenseId;
@@ -23,6 +25,7 @@ const ManageExpense = ({ route, navigation }) => {
   }, [navigation, isEditing]);
 
   const deleteExpenseHandler = async () => {
+    setIsSubmitting(true);
     await deleteExpense(editedExpenseId);
     expenseCtx.deleteExpense(editedExpenseId);
     navigation.goBack();
@@ -33,6 +36,7 @@ const ManageExpense = ({ route, navigation }) => {
   };
 
   const confirmHandler = async (expenseData) => {
+    setIsSubmitting(true);
     if (isEditing) {
       expenseCtx.updatedExpense(editedExpenseId, expenseData);
       await updateExpense(editedExpenseId, expenseData);
@@ -43,6 +47,10 @@ const ManageExpense = ({ route, navigation }) => {
 
     navigation.goBack();
   };
+
+  if (isSubmitting) {
+    return <LoadingOverlay />;
+  }
 
   return (
     <View style={styles.container}>
